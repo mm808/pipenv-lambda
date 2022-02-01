@@ -10,12 +10,12 @@ Parameters:
   LambdaZipsBucket:
     Description: bucket where Lambda source zip is
     Type: String
-    Default: arn:aws:s3:::lambda-code-zips-mm808
+    Default: lambda-code-zips-mm808
 
   LambdaZipsBucketKey:
     Description: bucket prefix where Lambda source zip is
     Type: String
-    Default: Json-Creator
+    Default: lambda.zip
 
 Resources:
   JsonCreator:
@@ -23,6 +23,7 @@ Resources:
     Properties:
       Role: !Ref IamRole
       Runtime: python3.9
+      Handler: index.lambda_handler
       Code:
-        S3Bucket: "lambda-code-zips-mm808"
-        S3Key: "lambda.zip"
+        S3Bucket: !Ref LambdaZipsBucket
+        S3Key: !Ref LambdaZipsBucketKey
