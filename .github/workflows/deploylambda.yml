@@ -60,7 +60,7 @@ jobs:
         pwd
         ls -alt
         aws cloudformation deploy \
-          --template-file /cloudformation/lambda_template.yml \
+          --template-file ./cloudformation/lambda_template.yml \
           --stack-name $APP_NAME \
           --no-fail-on-empty-changeset
           --parameter-overrides \
