@@ -1,0 +1,27 @@
+Description: >
+  This template deploys a sample lambda that creates a json file and uploads it to a s3 bucket
+
+Parameters:
+  IamRole:
+    Description: role for this lambda
+    Type: String
+    Default: arn:aws:iam::843515436184:role/S3PutObjRole
+  
+  LambdaZipsBucket:
+    Description: bucket where Lambda source zip is
+    Type: String
+    Default: arn:aws:s3:::lambda-code-zips-mm808
+
+  LambdaZipsBucketKey:
+    Description: bucket prefix where Lambda source zip is
+    Type: String
+    Default: Json-Creator
+
+Resources:
+  JsonCreator:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      Role: !Ref IamRole
+      Code:
+        S3Bucket: !Sub '${LambdaZipsBucket}'
+        S3Key: !Sub '${LambdaZipsBucketKey}/index.zip}'
