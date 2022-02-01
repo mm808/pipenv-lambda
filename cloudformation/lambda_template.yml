@@ -23,5 +23,5 @@ Resources:
     Properties:
       Role: !Ref IamRole
       Code:
-        S3Bucket: !Sub '${LambdaZipsBucket}'
-        S3Key: !Sub '${LambdaZipsBucketKey}/index.zip}'
+        S3Bucket: !Ref LambdaZipsBucket
+        S3Key: !Sub '${LambdaZipsBucketKey}/lambda.zip}'
