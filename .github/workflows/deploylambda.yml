@@ -1,0 +1,59 @@
+# This workflow will push a lambda function
+
+name: Deploy Lmabda
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  AWS_REGION: us-east-1
+  TEMPLATE_PATH: /cloudformation/lambda_template.yml
+  APP_NAME: Json-Creator
+  ENVIRONMENT_NAME: mm808
+  LAMBDA_CODE_BUCKET: lambda-code-zips-mm808
+
+jobs:
+  ZipAndUploadCode:
+    name: zipcode
+    runs-on: ubuntu-latest
+    environment: $ENVIRONMENT_NAME
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: ZipIt
+      run: |
+        zip -j index.zip src/main.py
+        pwd
+        ls -alt
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
+
+    - name: S3 Upload
+      run: |
+        aws s3 cp index.zip s3://$LAMBDA_CODE_BUCKET/$APP_NAME/index.zip
+        
+  DeployLambda:
+    name: deploylambda
+    runs-on: ubuntu-latest
+    environment: $ENVIRONMENT_NAM
+    steps:
+    - name: Deploy lambda
+      run: |
+        pwd
+        ls -alt
+        aws cloudformation deploy \
+          --template-file $TEMPLATE_PATH \
+          --stack-name $APP_NAME \
+          --no-fail-on-empty-changeset
+          --parameter-overrides \
+            EnvironmentName=$ENVIRONMENT_NAME AppName=$APP_NAME
+
+    
