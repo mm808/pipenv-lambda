@@ -38,7 +38,7 @@ jobs:
 
     - name: S3 Upload
       run: |
-        aws s3 cp lambda.zip s3://$LAMBDA_CODE_BUCKET/$APP_NAME/lambda.zip
+        aws s3 cp lambda.zip s3://$LAMBDA_CODE_BUCKET/lambda.zip
         
   DeployLambda:
     name: deploylambda

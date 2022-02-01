@@ -23,5 +23,5 @@ Resources:
     Properties:
       Role: !Ref IamRole
       Code:
-        S3Bucket: 'arn:aws:s3:::lambda-code-zips-mm808'
-        S3Key: !Sub 'Json-Creator/lambda.zip'
+        S3Bucket: lambda-code-zips-mm808
+        S3Key: lambda.zip
