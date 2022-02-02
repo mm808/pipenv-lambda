@@ -62,7 +62,7 @@ jobs:
         aws cloudformation deploy \
           --template-file ./cloudformation/lambda_template.yml \
           --stack-name $APP_NAME \
-          --no-fail-on-empty-changeset
+          --no-fail-on-empty-changeset \
           --parameter-overrides \
             EnvironmentName=$ENVIRONMENT_NAME AppName=$APP_NAME
 

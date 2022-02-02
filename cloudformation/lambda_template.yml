@@ -23,7 +23,7 @@ Resources:
     Properties:
       Role: !Ref IamRole
       Runtime: python3.9
-      Handler: index.lambda_handler
+      Handler: main.lambda_handler
       Code:
         S3Bucket: !Ref LambdaZipsBucket
         S3Key: !Ref LambdaZipsBucketKey
