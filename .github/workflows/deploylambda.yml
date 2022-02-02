@@ -26,8 +26,6 @@ jobs:
     - name: ZipIt
       run: |
         zip -j lambda.zip src/main.py
-        pwd
-        ls -alt
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -57,10 +55,8 @@ jobs:
 
     - name: Deploy lambda
       run: |
-        pwd
-        ls -alt
         aws cloudformation deploy \
-          --template-file ./cloudformation/lambda_template.yml \
+          --template-file .$TEMPLATE_PATH \
           --stack-name $APP_NAME \
           --no-fail-on-empty-changeset \
           --parameter-overrides \
